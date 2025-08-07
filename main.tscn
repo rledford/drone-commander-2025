@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6q8wks4ev5mq"]
+
+[ext_resource type="Script" uid="uid://shsbcvgc6nge" path="res://managers/game_manager.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://by0qoac7eocyx" path="res://actors/player/player.tscn" id="2_0xm2m"]
+
+[node name="Main" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_ig7tw")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Player" type="Node" parent="World"]
+
+[node name="Drones" type="Node" parent="World"]
+
+[node name="Enemies" type="Node" parent="World"]
+
+[node name="ControlPoints" type="Node" parent="World"]
+
+[node name="Scrap" type="Node" parent="World"]
+
+[node name="Base" type="Node" parent="World"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Player" parent="." node_paths=PackedStringArray("game_manager") instance=ExtResource("2_0xm2m")]
+position = Vector2(17, 20)
+game_manager = NodePath("../GameManager")
