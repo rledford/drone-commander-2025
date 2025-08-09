@@ -17,11 +17,12 @@ func get_bullet() -> Bullet:
 	if _bullet_pool.is_empty():
 		var new_bullet = BulletScene.instantiate()
 		add_child(new_bullet)
+		
 		return new_bullet
 	else:
 		var bullet: Bullet = _bullet_pool.pop_back()
 		_activate(bullet)
-		add_child(bullet)
+		
 		return bullet
 
 
@@ -34,7 +35,9 @@ func _activate(node: Node2D):
 	node.set_process(true)
 	node.set_physics_process(true)
 	node.visible = true
-	print("pool size ", len(_bullet_pool))
+	
+	if not node.get_parent():
+		add_child(node)
 
 
 func _deactivate(node: Node2D):

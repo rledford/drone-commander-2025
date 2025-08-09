@@ -24,5 +24,4 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	lifetime -= delta
 	if lifetime <= 0:
-		print('bullet expired')
 		EventBus.bullet_expired.emit(self)
