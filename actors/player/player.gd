@@ -7,9 +7,12 @@ extends CharacterBody2D
 @export var fire_rate: float = 0.5
 @export var bullet_speed: float = 600.0
 @export var bullet_damage: int = 25
-@export var game_manager: GameManager
 
 var _last_fire_time = -INF
+
+
+func _ready() -> void:
+	pass
 
 
 func _process(_delta: float) -> void:
@@ -30,13 +33,7 @@ func shoot():
 	self._last_fire_time = now
 
 	var dir = self.global_position.direction_to(get_global_mouse_position())
-	
-	game_manager.get_bullet().init(
-		Vector2(position),
-		dir,
-		bullet_speed,
-		bullet_damage
-	)
+	EventBus.bullet_fired.emit(&"player", Vector2(position), dir, bullet_speed, bullet_damage)
 
 
 func _physics_process(delta: float) -> void:
