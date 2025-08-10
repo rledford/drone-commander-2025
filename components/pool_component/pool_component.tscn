@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://xr5uduk3fqnb"]
+
+[ext_resource type="Script" uid="uid://ceoaei3qq7uxi" path="res://components/pool_component/pool_component.gd" id="1_ruvtv"]
+
+[node name="PoolComponent" type="Node"]
+script = ExtResource("1_ruvtv")

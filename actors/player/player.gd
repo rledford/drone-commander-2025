@@ -31,7 +31,7 @@ func shoot():
 
 	var dir = self.global_position.direction_to(get_global_mouse_position())
 	
-	game_manager.get_bullet().init(
+	game_manager.bullet_pool.next_node().init(
 		Vector2(position),
 		dir,
 		bullet_speed,
