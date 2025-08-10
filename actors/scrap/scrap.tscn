@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckj8myqtxuoiq"]
+[gd_scene load_steps=5 format=3 uid="uid://ckj8myqtxuoiq"]
 
 [ext_resource type="PackedScene" uid="uid://wo7mck2jr02p" path="res://components/collectible_component/collectible_component.tscn" id="1_1v02r"]
 [ext_resource type="Script" uid="uid://qe3yx00o5gft" path="res://actors/scrap/scrap.gd" id="1_glojv"]
@@ -6,7 +6,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_glojv"]
 radius = 4.0
 
-[node name="Scrap" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ytnd"]
+radius = 2.0
+
+[node name="Scrap" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_glojv")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -20,6 +25,9 @@ collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleArea"]
 shape = SubResource("CircleShape2D_glojv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1ytnd")
 
 [node name="CollectibleComponent" parent="." node_paths=PackedStringArray("area") instance=ExtResource("1_1v02r")]
 item_id = &"scrap"

@@ -24,6 +24,10 @@ Enums="*res://globals/enums.gd"
 
 gdscript/warnings/unused_signal=0
 
+[global_group]
+
+enemy=""
+
 [input]
 
 move_left={

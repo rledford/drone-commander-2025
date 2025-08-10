@@ -21,6 +21,7 @@ func setup(pos: Vector2, dir: Vector2, spd: float, dmg: int) -> void:
 func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	if collision:
+		EventBus.bullet_hit.emit(self, collision)
 		EventBus.bullet_expired.emit(self)
 
 

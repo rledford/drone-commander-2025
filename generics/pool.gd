@@ -21,5 +21,5 @@ func release(node: Node) -> void:
 		return
 	var parent := node.get_parent()
 	if parent:
-		parent.remove_child(node)
+		parent.call_deferred("remove_child", node)
 	free.push_back(node)

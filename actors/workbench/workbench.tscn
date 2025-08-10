@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bi6nojwai0jqo" path="res://components/interactable_component/interactable_component.tscn" id="1_b2xr7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b2xr7"]
-size = Vector2(22, 64)
+size = Vector2(28, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6wh3t"]
 size = Vector2(14, 48)
@@ -13,6 +13,7 @@ size = Vector2(14, 48)
 script = ExtResource("1_6wh3t")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0.653476, 0.667354, 0.652236, 1)
 offset_left = -16.0
 offset_top = -37.0
 offset_right = 16.0
@@ -28,7 +29,7 @@ shape = SubResource("RectangleShape2D_b2xr7")
 [node name="InteractionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-position = Vector2(18, 0)
+position = Vector2(22, 0)
 shape = SubResource("RectangleShape2D_6wh3t")
 
 [node name="InteractableComponent" parent="." node_paths=PackedStringArray("area") instance=ExtResource("1_b2xr7")]
