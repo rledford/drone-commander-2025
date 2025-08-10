@@ -16,12 +16,15 @@ bullet_container = NodePath("../World/Bullets")
 
 [node name="World" type="Node2D" parent="."]
 
-[node name="Player" type="Node" parent="World"]
+[node name="Bullets" type="Node" parent="World"]
 
-[node name="Player" parent="World/Player" instance=ExtResource("2_0xm2m")]
+[node name="Player" type="Node" parent="World"]
 
 [node name="Workbench" parent="World/Player" instance=ExtResource("3_h2yge")]
 position = Vector2(108, 75)
+
+[node name="Player" parent="World/Player" instance=ExtResource("2_0xm2m")]
+position = Vector2(212, 130)
 
 [node name="Drones" type="Node" parent="World"]
 
@@ -38,7 +41,5 @@ position = Vector2(212, 24)
 position = Vector2(48, 17)
 
 [node name="Base" type="Node" parent="World"]
-
-[node name="Bullets" type="Node" parent="World"]
 
 [node name="UI" type="CanvasLayer" parent="."]
