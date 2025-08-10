@@ -1,20 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6q8wks4ev5mq"]
+[gd_scene load_steps=6 format=3 uid="uid://b6q8wks4ev5mq"]
 
 [ext_resource type="PackedScene" uid="uid://ixic0jq3dl22" path="res://managers/game_manager/game_manager.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://by0qoac7eocyx" path="res://actors/player/player.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://biqfrlv8afh32" path="res://managers/pool_manager/pool_manager.tscn" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bmrpgxq4n2bvx" path="res://actors/workbench/workbench.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ckj8myqtxuoiq" path="res://actors/scrap/scrap.tscn" id="4_1bvp3"]
 
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" parent="." instance=ExtResource("1_1bvp3")]
+[node name="GameManager" parent="." node_paths=PackedStringArray("pool_manager") instance=ExtResource("1_1bvp3")]
+pool_manager = NodePath("../PoolManager")
+
+[node name="PoolManager" parent="." instance=ExtResource("2_lquwl")]
 
 [node name="World" type="Node2D" parent="."]
 
 [node name="Player" type="Node" parent="World"]
 
-[node name="Player" parent="World/Player" node_paths=PackedStringArray("game_manager") instance=ExtResource("2_0xm2m")]
-game_manager = NodePath("../../../GameManager")
+[node name="Player" parent="World/Player" node_paths=PackedStringArray("pool_manager") instance=ExtResource("2_0xm2m")]
+pool_manager = NodePath("../../../PoolManager")
 
 [node name="Workbench" parent="World/Player" instance=ExtResource("3_h2yge")]
 position = Vector2(108, 75)

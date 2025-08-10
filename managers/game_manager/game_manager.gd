@@ -1,10 +1,16 @@
 extends Node
 class_name GameManager
 
-@onready var bullet_pool: Node = $BulletPool
+@export var pool_manager: PoolManager
 
 func _ready() -> void:
 	EventBus.item_collected.connect(handle_item_collected)
+	
+	pool_manager.register_pool(
+		&"bullet",
+		preload("res://actors/bullet/bullet.tscn"),
+		100
+	)
 
 
 func handle_item_collected(by: Node, item_id: String, amount: int) -> void:
