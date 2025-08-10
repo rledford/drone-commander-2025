@@ -8,8 +8,9 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="GameManager" parent="." node_paths=PackedStringArray("pool_manager") instance=ExtResource("1_1bvp3")]
+[node name="GameManager" parent="." node_paths=PackedStringArray("pool_manager", "bullet_container") instance=ExtResource("1_1bvp3")]
 pool_manager = NodePath("../PoolManager")
+bullet_container = NodePath("../World/Bullets")
 
 [node name="PoolManager" parent="." instance=ExtResource("2_lquwl")]
 
@@ -17,8 +18,7 @@ pool_manager = NodePath("../PoolManager")
 
 [node name="Player" type="Node" parent="World"]
 
-[node name="Player" parent="World/Player" node_paths=PackedStringArray("pool_manager") instance=ExtResource("2_0xm2m")]
-pool_manager = NodePath("../../../PoolManager")
+[node name="Player" parent="World/Player" instance=ExtResource("2_0xm2m")]
 
 [node name="Workbench" parent="World/Player" instance=ExtResource("3_h2yge")]
 position = Vector2(108, 75)
@@ -38,5 +38,7 @@ position = Vector2(212, 24)
 position = Vector2(48, 17)
 
 [node name="Base" type="Node" parent="World"]
+
+[node name="Bullets" type="Node" parent="World"]
 
 [node name="UI" type="CanvasLayer" parent="."]

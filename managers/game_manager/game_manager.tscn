@@ -1,12 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://ixic0jq3dl22"]
+[gd_scene load_steps=2 format=3 uid="uid://ixic0jq3dl22"]
 
 [ext_resource type="Script" uid="uid://shsbcvgc6nge" path="res://managers/game_manager/game_manager.gd" id="1_atyjh"]
-[ext_resource type="PackedScene" uid="uid://xr5uduk3fqnb" path="res://components/pool_component/pool_component.tscn" id="2_n15wl"]
-[ext_resource type="PackedScene" uid="uid://bma1ooeaqmcr2" path="res://actors/bullet/bullet.tscn" id="3_j7rj3"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_atyjh")
-
-[node name="BulletPool" parent="." instance=ExtResource("2_n15wl")]
-_entity = ExtResource("3_j7rj3")
-_size = 10
