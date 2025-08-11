@@ -33,7 +33,7 @@ func shoot():
 	self._last_fire_time = now
 
 	var dir = self.global_position.direction_to(get_global_mouse_position())
-	EventBus.bullet_fired.emit(&"player", Vector2(position), dir, bullet_speed, bullet_damage)
+	EventBus.bullet_fired.emit(Vector2(position), dir, bullet_speed, bullet_damage)
 
 
 func _physics_process(delta: float) -> void:

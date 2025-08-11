@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2peryne0m35g"]
+
+[ext_resource type="Script" uid="uid://dul7sbvr06dsg" path="res://actors/enemy/test_enemy/test_enemy.gd" id="1_2gygt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m6cq1"]
+
+[node name="TestEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 6
+script = ExtResource("1_2gygt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0.861424, 0, 0.101847, 1)
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m6cq1")
