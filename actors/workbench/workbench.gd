@@ -29,13 +29,14 @@ func _process(delta: float) -> void:
 func _on_craft_request_accepted(to: Node) -> void:
 	if not to == self: return
 	
+	print("handling accepted craft request")
 	_start_crafting()
 
 
 func _on_craft_request_rejected(to: Node, reason: String) -> void:
-	print("checking rejected craft request")
 	if not to == self: return
 	
+	print("handling rejected craft request")
 	print("Unable to craft %s: %s" % [self.craft_type, reason])
 
 

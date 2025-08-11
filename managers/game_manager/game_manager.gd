@@ -23,7 +23,7 @@ func on_bullet_hit(_bullet: Node, collision: KinematicCollision2D) -> void:
 	var collider := collision.get_collider() as Node2D
 	if collider.is_in_group(&"enemy"):
 		collider.queue_free()
-		var scrap_count = randi_range(1,3)
+		var scrap_count = randi_range(2,3)
 		for _i in range(scrap_count):
 			EventBus.scrap_dropped.emit(collider.global_position)
 		

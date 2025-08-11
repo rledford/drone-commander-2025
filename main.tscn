@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://by0qoac7eocyx" path="res://actors/player/player.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://biqfrlv8afh32" path="res://managers/pool_manager/pool_manager.tscn" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bmrpgxq4n2bvx" path="res://actors/workbench/workbench.tscn" id="3_h2yge"]
-[ext_resource type="PackedScene" uid="uid://ckj8myqtxuoiq" path="res://actors/scrap/scrap.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c2peryne0m35g" path="res://actors/enemy/test_enemy/test_enemy.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bcapq0a0qq6o6" path="res://actors/station/station.tscn" id="7_272bh"]
 
 [node name="Main" type="Node2D"]
 
@@ -18,44 +18,56 @@ scrap_container = NodePath("../World/Scrap")
 
 [node name="World" type="Node2D" parent="."]
 
+[node name="Scrap" type="Node" parent="World"]
+
 [node name="Bullets" type="Node" parent="World"]
 
 [node name="Player" type="Node" parent="World"]
 
-[node name="Workbench" parent="World/Player" instance=ExtResource("3_h2yge")]
-position = Vector2(215, 135)
+[node name="Player" parent="World/Player" instance=ExtResource("2_0xm2m")]
+position = Vector2(272, 369)
+
+[node name="DamageWB" parent="World/Player" instance=ExtResource("3_h2yge")]
+position = Vector2(193, 472)
+rotation = -0.785398
 craft_type = &"damage_drone"
 craft_time = 3.0
 
-[node name="Player" parent="World/Player" instance=ExtResource("2_0xm2m")]
-position = Vector2(262, 118)
+[node name="GatherWB" parent="World/Player" instance=ExtResource("3_h2yge")]
+position = Vector2(289, 513)
+rotation = -1.5708
+craft_type = &"gather_drone"
+craft_time = 3.0
 
-[node name="Drones" type="Node" parent="World"]
+[node name="SupportWB" parent="World/Player" instance=ExtResource("3_h2yge")]
+position = Vector2(155, 377)
+craft_type = &"support_drone"
+craft_time = 3.0
 
 [node name="Enemies" type="Node" parent="World" groups=["enemy"]]
 
 [node name="TestEnemy" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(187, 150)
+position = Vector2(330, 303)
 
 [node name="TestEnemy2" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(275, 155)
+position = Vector2(318, 319)
 
 [node name="TestEnemy3" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(215, 182)
+position = Vector2(326, 328)
 
 [node name="TestEnemy4" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(187, 115)
+position = Vector2(299, 309)
+
+[node name="TestEnemy5" parent="World/Enemies" instance=ExtResource("5_7mycd")]
+position = Vector2(351, 317)
+
+[node name="Drones" type="Node" parent="World"]
 
 [node name="ControlPoints" type="Node" parent="World"]
 
-[node name="Scrap" type="Node" parent="World"]
-
-[node name="Scrap" parent="World/Scrap" instance=ExtResource("4_1bvp3")]
-position = Vector2(212, 24)
-
-[node name="Scrap2" parent="World/Scrap" instance=ExtResource("4_1bvp3")]
-position = Vector2(48, 17)
-
-[node name="Base" type="Node" parent="World"]
+[node name="Station" type="Node" parent="World"]
 
 [node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Station" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(289, 217)

@@ -1,0 +1,117 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcapq0a0qq6o6"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_i15ia"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i15ia"]
+size = Vector2(142, 20)
+
+[node name="Station" type="Node2D"]
+
+[node name="Wall" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall"]
+scale = Vector2(142, 20)
+texture = SubResource("CanvasTexture_i15ia")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
+shape = SubResource("RectangleShape2D_i15ia")
+
+[node name="Wall2" type="Node2D" parent="."]
+position = Vector2(-114, 47)
+rotation = -0.785398
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall2"]
+scale = Vector2(142, 20)
+texture = SubResource("CanvasTexture_i15ia")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall2"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
+shape = SubResource("RectangleShape2D_i15ia")
+
+[node name="Wall3" type="Node2D" parent="."]
+position = Vector2(-161, 161)
+rotation = -1.5708
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall3"]
+scale = Vector2(142, 20)
+texture = SubResource("CanvasTexture_i15ia")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall3"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3/StaticBody2D"]
+shape = SubResource("RectangleShape2D_i15ia")
+
+[node name="Wall4" type="Node2D" parent="."]
+position = Vector2(-114, 275)
+rotation = -2.35619
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall4"]
+scale = Vector2(142, 20)
+texture = SubResource("CanvasTexture_i15ia")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall4"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4/StaticBody2D"]
+shape = SubResource("RectangleShape2D_i15ia")
+
+[node name="Wall5" type="Node2D" parent="."]
+position = Vector2(0, 323)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall5"]
+scale = Vector2(142, 20)
+texture = SubResource("CanvasTexture_i15ia")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall5"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall5/StaticBody2D"]
+shape = SubResource("RectangleShape2D_i15ia")
+
+[node name="Wall6" type="Node2D" parent="."]
+position = Vector2(114, 276)
+rotation = 2.35619
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall6"]
+scale = Vector2(142, 20)
+texture = SubResource("CanvasTexture_i15ia")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall6"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall6/StaticBody2D"]
+shape = SubResource("RectangleShape2D_i15ia")
+
+[node name="Wall7" type="Node2D" parent="."]
+position = Vector2(161, 162)
+rotation = 1.5708
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall7"]
+scale = Vector2(142, 20)
+texture = SubResource("CanvasTexture_i15ia")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall7"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall7/StaticBody2D"]
+shape = SubResource("RectangleShape2D_i15ia")
