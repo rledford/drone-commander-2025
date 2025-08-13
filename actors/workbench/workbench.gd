@@ -14,8 +14,8 @@ var _craft_progress = 0.0
 
 func _ready() -> void:
 	interaction.interact.connect(_on_interact)
-	EventBus.craft_drone_request_accepted.connect(_on_craft_request_accepted)
-	EventBus.craft_drone_request_rejected.connect(_on_craft_request_rejected)
+	EventBus.drone_craft_request_accepted.connect(_on_craft_request_accepted)
+	EventBus.drone_craft_request_rejected.connect(_on_craft_request_rejected)
 
 
 func _process(delta: float) -> void:
@@ -55,4 +55,4 @@ func _complete_crafting():
 func _on_interact():
 	if _is_crafting: return
 	
-	EventBus.craft_drone_requested.emit(self, craft_cost)
+	EventBus.drone_craft_requested.emit(self, craft_cost)

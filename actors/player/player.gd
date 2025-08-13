@@ -12,7 +12,7 @@ var _last_fire_time = -INF
 
 
 func _ready() -> void:
-	pass
+	EventBus.scrap_collect_requested.connect(_on_scrap_collect_requested)
 
 
 func _process(_delta: float) -> void:
@@ -60,3 +60,9 @@ func _physics_process(delta: float) -> void:
 func _aim() -> void:
 	# self.rotation = self.global_position.angle_to(get_global_mouse_position())
 	look_at(get_global_mouse_position())
+
+
+func _on_scrap_collect_requested(by: Node, scrap: Node, amount: int) -> void:
+	if by != self: return
+	
+	EventBus.scrap_collected.emit(by, scrap, amount)

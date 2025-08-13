@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://t8v3lo2c0dnd" path="res://managers/pool_manager/pool_manager.gd" id="1_q7x55"]
 
-[node name="PoolManager" type="Node" groups=["pool_provider"]]
+[node name="PoolManager" type="Node"]
 script = ExtResource("1_q7x55")

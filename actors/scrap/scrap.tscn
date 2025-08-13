@@ -9,7 +9,7 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ytnd"]
 radius = 2.0
 
-[node name="Scrap" type="CharacterBody2D"]
+[node name="Scrap" type="CharacterBody2D" groups=["scrap"]]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_glojv")

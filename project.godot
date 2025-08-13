@@ -27,6 +27,8 @@ gdscript/warnings/unused_signal=0
 [global_group]
 
 enemy=""
+player=""
+scrap=""
 
 [input]
 

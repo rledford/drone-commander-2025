@@ -46,28 +46,40 @@ func on_scrap_dropped(position: Vector2) -> void:
 	scrap_container.add_child(scrap)
 
 
-func on_scrap_collected(_by: Node, scrap: Node, amount: int) -> void:
+func on_scrap_collected(by: Node, scrap: Node, amount: int) -> void:
+	var old_scrap = _total_scrap
 	_total_scrap += amount
+	
 	pool_manager.get_pool(&"scrap").release(scrap)
+	
+	EventBus.total_scrap_changed.emit(old_scrap, _total_scrap)
 
 
-func on_craft_drone_requested(by: Node, cost: int) -> void:
+func on_scrap_delivered(by: Node, to: Node, amount: int) -> void:
+	print("delivered %s scrap" % amount)
+	var old_scrap = _total_scrap
+	_total_scrap += amount
+	EventBus.total_scrap_changed.emit(old_scrap, _total_scrap)
+
+
+func on_drone_craft_requested(by: Node, cost: int) -> void:
 	if _total_scrap < cost:
-		EventBus.craft_drone_request_rejected.emit(by, "Not enough scrap")
+		EventBus.drone_craft_request_rejected.emit(by, "Not enough scrap")
 	else:
 		var old_total_scrap = _total_scrap
 		_total_scrap -= cost
 		EventBus.total_scrap_changed.emit(old_total_scrap, _total_scrap)
-		EventBus.craft_drone_request_accepted.emit(by)
+		EventBus.drone_craft_request_accepted.emit(by)
 
 
 func connect_signals():
 	EventBus.scrap_dropped.connect(on_scrap_dropped)
+	EventBus.scrap_delivered.connect(on_scrap_delivered)
 	EventBus.scrap_collected.connect(on_scrap_collected)
 	EventBus.bullet_fired.connect(on_bullet_fired)
 	EventBus.bullet_hit.connect(on_bullet_hit)
 	EventBus.bullet_expired.connect(on_bullet_expired)
-	EventBus.craft_drone_requested.connect(on_craft_drone_requested)
+	EventBus.drone_craft_requested.connect(on_drone_craft_requested)
 
 
 func register_pools():

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpj6awi0qwf6r"]
+
+[ext_resource type="Script" uid="uid://qyu62i8kggm1" path="res://actors/drone/gather_drone/gather_drone.gd" id="1_36357"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_36357"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_36357"]
+radius = 11.0454
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_elyho"]
+radius = 8.0
+
+[node name="GatherDrone" type="CharacterBody2D"]
+collision_mask = 8
+script = ExtResource("1_36357")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0.44857, 0.803199, 1)
+scale = Vector2(24, 24)
+texture = SubResource("CanvasTexture_36357")
+
+[node name="Dropzone" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dropzone"]
+shape = SubResource("CircleShape2D_36357")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_elyho")
