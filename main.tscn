@@ -45,19 +45,6 @@ position = Vector2(155, 377)
 craft_type = &"support_drone"
 craft_time = 3.0
 
-[node name="ScrapDropoff" parent="World/Player"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-position = Vector2(290, 167)
-script = null
-
 [node name="Enemies" type="Node" parent="World" groups=["enemy"]]
 
 [node name="TestEnemy" parent="World/Enemies" instance=ExtResource("5_7mycd")]
