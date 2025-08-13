@@ -24,4 +24,4 @@ func setup(pos: Vector2):
 
 
 func _on_collected(by: Node, _item_id: String, amount: int) -> void:
-	EventBus.scrap_collected.emit(by, self, amount)
+	EventBus.scrap_collect_requested.emit(by, self, amount)
