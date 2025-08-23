@@ -8,14 +8,15 @@
 radius = 11.0454
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_elyho"]
-radius = 8.0
+radius = 7.81025
 
 [node name="GatherDrone" type="CharacterBody2D"]
+collision_layer = 16
 collision_mask = 8
 script = ExtResource("1_36357")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0, 0.44857, 0.803199, 1)
+modulate = Color(0.563861, 0.0282466, 1, 1)
 scale = Vector2(24, 24)
 texture = SubResource("CanvasTexture_36357")
 

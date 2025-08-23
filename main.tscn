@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6q8wks4ev5mq"]
+[gd_scene load_steps=10 format=3 uid="uid://b6q8wks4ev5mq"]
 
 [ext_resource type="PackedScene" uid="uid://ixic0jq3dl22" path="res://managers/game_manager/game_manager.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://by0qoac7eocyx" path="res://actors/player/player.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://biqfrlv8afh32" path="res://managers/pool_manager/pool_manager.tscn" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://ckj8myqtxuoiq" path="res://actors/scrap/scrap.tscn" id="3_5vw27"]
 [ext_resource type="PackedScene" uid="uid://bmrpgxq4n2bvx" path="res://actors/workbench/workbench.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c2peryne0m35g" path="res://actors/enemy/test_enemy/test_enemy.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bpj6awi0qwf6r" path="res://actors/drone/gather_drone/gather_drone.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://bcapq0a0qq6o6" path="res://actors/station/station.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://bkxnvn4076qs1" path="res://actors/drone/damage_drone/damage_drone.tscn" id="9_kek77"]
 
 [node name="Main" type="Node2D"]
 
@@ -21,12 +23,72 @@ scrap_container = NodePath("../World/Scrap")
 
 [node name="Scrap" type="Node" parent="World"]
 
+[node name="Scrap" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(404, 243)
+
+[node name="Scrap2" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(338, 255)
+
+[node name="Scrap3" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(474, 300)
+
+[node name="Scrap4" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(266, 191)
+
+[node name="Scrap5" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(246, 266)
+
+[node name="Scrap6" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(394, 355)
+
+[node name="Scrap7" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(175, 209)
+
+[node name="Scrap8" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(379, 402)
+
+[node name="Scrap9" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(189, 284)
+
+[node name="Scrap10" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(419, 438)
+
+[node name="Scrap11" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(93, 256)
+
+[node name="Scrap12" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(80, 329)
+
+[node name="Scrap13" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(230, 329)
+
+[node name="Scrap14" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(223, 391)
+
+[node name="Scrap15" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(334, 419)
+
+[node name="Scrap16" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(372, 450)
+
+[node name="Scrap17" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(263, 437)
+
+[node name="Scrap18" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(90, 397)
+
+[node name="Scrap19" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(486, 366)
+
+[node name="Scrap20" parent="World/Scrap" instance=ExtResource("3_5vw27")]
+position = Vector2(340, 489)
+
 [node name="Bullets" type="Node" parent="World"]
 
 [node name="Player" type="Node" parent="World"]
 
 [node name="Player" parent="World/Player" instance=ExtResource("2_0xm2m")]
-position = Vector2(272, 369)
+position = Vector2(495, 199)
 
 [node name="DamageWB" parent="World/Player" instance=ExtResource("3_h2yge")]
 position = Vector2(193, 472)
@@ -45,27 +107,22 @@ position = Vector2(155, 377)
 craft_type = &"support_drone"
 craft_time = 3.0
 
-[node name="Enemies" type="Node" parent="World" groups=["enemy"]]
+[node name="Enemies" type="Node" parent="World"]
 
 [node name="TestEnemy" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(330, 303)
+position = Vector2(649, 224)
 
 [node name="TestEnemy2" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(318, 319)
+position = Vector2(671, 349)
 
 [node name="TestEnemy3" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(326, 328)
+position = Vector2(858, 183)
 
 [node name="TestEnemy4" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(299, 309)
+position = Vector2(641, 456)
 
 [node name="TestEnemy5" parent="World/Enemies" instance=ExtResource("5_7mycd")]
-position = Vector2(351, 317)
-
-[node name="Drones" type="Node" parent="World"]
-
-[node name="GatherDrone" parent="World/Drones" instance=ExtResource("7_5vw27")]
-position = Vector2(316, 312)
+position = Vector2(546, 86)
 
 [node name="ControlPoints" type="Node" parent="World"]
 
@@ -73,5 +130,28 @@ position = Vector2(316, 312)
 
 [node name="Station" parent="World/Station" instance=ExtResource("7_272bh")]
 position = Vector2(289, 217)
+
+[node name="Drones" type="Node" parent="World"]
+
+[node name="GatherDrone" parent="World/Drones" instance=ExtResource("7_5vw27")]
+position = Vector2(389, 165)
+
+[node name="GatherDrone2" parent="World/Drones" instance=ExtResource("7_5vw27")]
+position = Vector2(33, 168)
+
+[node name="GatherDrone3" parent="World/Drones" instance=ExtResource("7_5vw27")]
+position = Vector2(523, 564)
+
+[node name="GatherDrone4" parent="World/Drones" instance=ExtResource("7_5vw27")]
+position = Vector2(140, 570)
+
+[node name="DamageDrone" parent="World/Drones" instance=ExtResource("9_kek77")]
+position = Vector2(576, -99)
+
+[node name="DamageDrone2" parent="World/Drones" instance=ExtResource("9_kek77")]
+position = Vector2(1228, 705)
+
+[node name="DamageDrone3" parent="World/Drones" instance=ExtResource("9_kek77")]
+position = Vector2(-27, 727)
 
 [node name="UI" type="CanvasLayer" parent="."]

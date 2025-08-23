@@ -19,16 +19,6 @@ func on_bullet_fired(position: Vector2, direction: Vector2, speed: float, damage
 	bullet_container.add_child(bullet)
 
 
-func on_bullet_hit(_bullet: Node, collision: KinematicCollision2D) -> void:
-	var collider := collision.get_collider() as Node2D
-	if collider.is_in_group(&"enemy"):
-		collider.queue_free()
-		var scrap_count = randi_range(2,3)
-		for _i in range(scrap_count):
-			EventBus.scrap_dropped.emit(collider.global_position)
-		
-
-
 func on_bullet_expired(bullet: Node) -> void:
 	print("bullet expired")
 	if not is_instance_of(bullet, Bullet): return
@@ -46,7 +36,11 @@ func on_scrap_dropped(position: Vector2) -> void:
 	scrap_container.add_child(scrap)
 
 
-func on_scrap_collected(by: Node, scrap: Node, amount: int) -> void:
+func on_scrap_picked_up(_by: Node, scrap: Node) -> void:
+	pool_manager.get_pool(&"scrap").release(scrap)
+
+
+func on_scrap_collected(_by: Node, scrap: Node, amount: int) -> void:
 	var old_scrap = _total_scrap
 	_total_scrap += amount
 	
@@ -55,7 +49,7 @@ func on_scrap_collected(by: Node, scrap: Node, amount: int) -> void:
 	EventBus.total_scrap_changed.emit(old_scrap, _total_scrap)
 
 
-func on_scrap_delivered(by: Node, to: Node, amount: int) -> void:
+func on_scrap_delivered(_by: Node, _to: Node, amount: int) -> void:
 	print("delivered %s scrap" % amount)
 	var old_scrap = _total_scrap
 	_total_scrap += amount
@@ -75,9 +69,9 @@ func on_drone_craft_requested(by: Node, cost: int) -> void:
 func connect_signals():
 	EventBus.scrap_dropped.connect(on_scrap_dropped)
 	EventBus.scrap_delivered.connect(on_scrap_delivered)
+	EventBus.scrap_picked_up.connect(on_scrap_picked_up)
 	EventBus.scrap_collected.connect(on_scrap_collected)
 	EventBus.bullet_fired.connect(on_bullet_fired)
-	EventBus.bullet_hit.connect(on_bullet_hit)
 	EventBus.bullet_expired.connect(on_bullet_expired)
 	EventBus.drone_craft_requested.connect(on_drone_craft_requested)
 

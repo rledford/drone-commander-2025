@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkxnvn4076qs1"]
+
+[ext_resource type="Script" uid="uid://dyi45038vtrvp" path="res://actors/drone/damage_drone/damage_drone.gd" id="1_o51f5"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_o51f5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cm170"]
+
+[node name="DamageDrone" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_o51f5")
+max_speed = 192.0
+accel = 288.0
+decel = 192.0
+metadata/_custom_type_script = "uid://rdwx1ep4fejj"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.85332, 0.847739, 7.70092e-07, 1)
+scale = Vector2(24, 24)
+texture = SubResource("CanvasTexture_o51f5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cm170")

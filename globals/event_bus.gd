@@ -3,13 +3,14 @@ extends Node
 
 # player
 signal player_dead
-signal bullet_hit(bullet: Node, collision: KinematicCollision2D)
+signal bullet_collided(with: Node, velocity: Vector2, damage: int)
 signal bullet_fired(position: Vector2, direction: Vector2, speed: float, damage: int)
 signal bullet_expired(bullet: Node)
 
 # scrap
 signal scrap_dropped(position: Vector2)
-signal scrap_collect_requested(by: Node, scrap: Node, amount: int)
+signal scrap_pickup_requested(by: Node, scrap: Node, amount: int)
+signal scrap_picked_up(by: Node, scrap: Node)
 signal scrap_collected(by: Node, scrap: Node, amount: int)
 signal scrap_delivered(by: Node, to: Node, amount: int)
 signal total_scrap_changed(old_scrap: int, new_scrap: int)

@@ -12,7 +12,7 @@ var _last_fire_time = -INF
 
 
 func _ready() -> void:
-	EventBus.scrap_collect_requested.connect(_on_scrap_collect_requested)
+	EventBus.scrap_pickup_requested.connect(_on_scrap_pickup_requested)
 
 
 func _process(_delta: float) -> void:
@@ -62,7 +62,7 @@ func _aim() -> void:
 	look_at(get_global_mouse_position())
 
 
-func _on_scrap_collect_requested(by: Node, scrap: Node, amount: int) -> void:
+func _on_scrap_pickup_requested(by: Node, scrap: Node, amount: int) -> void:
 	if by != self: return
 	
 	EventBus.scrap_collected.emit(by, scrap, amount)
