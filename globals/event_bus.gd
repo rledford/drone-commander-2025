@@ -7,6 +7,9 @@ signal bullet_collided(with: Node, velocity: Vector2, damage: int)
 signal bullet_fired(position: Vector2, direction: Vector2, speed: float, damage: int)
 signal bullet_expired(bullet: Node)
 
+# drone
+signal unit_healed(by: Node, target: Node, amoutn: int)
+
 # scrap
 signal scrap_dropped(position: Vector2)
 signal scrap_pickup_requested(by: Node, scrap: Node, amount: int)

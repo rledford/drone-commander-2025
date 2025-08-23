@@ -11,15 +11,22 @@ enum State {
 	PATROL,
 	GATHER,
 	DROPOFF,
-	ATTACK
+	ATTACK,
+	FOLLOW
 }
 
+
+@export var max_hp: int = 100
 @export var max_speed: float = 100.0
 @export var accel: float = 256.0
 @export var decel: float = 128.0
 @export var patrol_range: float = 256.0
 @export var scan_range: float = 256.0
 @export var scan_frequency: float = 1.0
+
+@onready var hp: int = max_hp
+
+var speed_scale: float = 1.0
 
 var patrol_destination: Vector2
 var patrol_target: Node
@@ -28,6 +35,10 @@ var scan_times := {} # { StringName: TicksMilliseconds }
 
 func set_state(new_state: int) -> void:
 	state = new_state
+
+
+func computed_speed() -> float:
+	return speed_scale * max_speed
 
 
 func is_valid_target(node) -> bool:
@@ -45,7 +56,7 @@ func acquire_target_in_range(group: StringName, max_range: float = INF) -> Node:
 	var max_range_squared = pow(max_range, 2) if max_range != INF else max_range
 	var nodes = get_tree().get_nodes_in_group(group).filter(
 		func(node):
-			return node.global_position.distance_squared_to(global_position) < max_range_squared
+			return node != self and node.global_position.distance_squared_to(global_position) < max_range_squared
 	)
 	
 	if len(nodes) == 0:
@@ -91,12 +102,12 @@ func move_toward_target_position(pos: Vector2, delta: float) -> void:
 	var is_moving_toward_y = sign(dir.y) == sign(velocity.y)
 	
 	velocity.x = move_toward(
-		velocity.x, dir.x * max_speed,
+		velocity.x, dir.x * computed_speed(),
 		delta * (accel if is_moving_toward_x else decel)
 	)
 
 	velocity.y = move_toward(
-		velocity.y, dir.y * max_speed,
+		velocity.y, dir.y * computed_speed(),
 		delta * (accel if is_moving_toward_y else decel)
 	)
 
@@ -118,7 +129,20 @@ func keep_target_at_distance(target: Node, desired_distance: float, tolerance: f
 		drift(delta)
 		return
 	
-	var speed = clamp(distance_error * 0.5, 0, max_speed)
+	var speed = clamp(distance_error * 0.5, 0, computed_speed())
+	var pos = Vector2(global_position + (direction_to_move * speed))
+	
+	move_toward_target_position(pos, delta)
+
+
+func keep_target_in_range(target: Node, desired_range: float, delta: float) -> void:
+	var dist_squared = global_position.distance_squared_to(target.global_position)
+	if dist_squared < pow(desired_range, 2):
+		return
+	
+	var direction_to_move = global_position.direction_to(target.global_position)
+	var distance_error = sqrt(dist_squared) - desired_range
+	var speed = clamp(distance_error * 0.5, 0, computed_speed())
 	var pos = Vector2(global_position + (direction_to_move * speed))
 	
 	move_toward_target_position(pos, delta)

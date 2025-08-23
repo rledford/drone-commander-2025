@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6q8wks4ev5mq"]
+[gd_scene load_steps=11 format=3 uid="uid://b6q8wks4ev5mq"]
 
 [ext_resource type="PackedScene" uid="uid://ixic0jq3dl22" path="res://managers/game_manager/game_manager.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://by0qoac7eocyx" path="res://actors/player/player.tscn" id="2_0xm2m"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bpj6awi0qwf6r" path="res://actors/drone/gather_drone/gather_drone.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://bcapq0a0qq6o6" path="res://actors/station/station.tscn" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://bkxnvn4076qs1" path="res://actors/drone/damage_drone/damage_drone.tscn" id="9_kek77"]
+[ext_resource type="PackedScene" uid="uid://fd6soodr1wlb" path="res://actors/drone/support_drone/support_drone.tscn" id="10_4c57u"]
 
 [node name="Main" type="Node2D"]
 
@@ -153,5 +154,17 @@ position = Vector2(1228, 705)
 
 [node name="DamageDrone3" parent="World/Drones" instance=ExtResource("9_kek77")]
 position = Vector2(-27, 727)
+
+[node name="SupportDrone" parent="World/Drones" instance=ExtResource("10_4c57u")]
+position = Vector2(1137, 497)
+heal_rate = null
+base_heal_amount = null
+max_hp = null
+
+[node name="SupportDrone2" parent="World/Drones" instance=ExtResource("10_4c57u")]
+position = Vector2(16, 14)
+heal_rate = null
+base_heal_amount = null
+max_hp = null
 
 [node name="UI" type="CanvasLayer" parent="."]
