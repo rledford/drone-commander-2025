@@ -24,4 +24,8 @@ func setup(pos: Vector2):
 
 
 func _on_collected(by: Node, _item_id: String, amount: int) -> void:
+	if by.get(&"collect"):
+		print("no collect method for scrap pickup")
+	else:
+		print("has collect method")
 	EventBus.scrap_pickup_requested.emit(by, self, amount)

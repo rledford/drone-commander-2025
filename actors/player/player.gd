@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+@export var scrap_state: ScrapState
+@export var arsenal: ArsenalState
+
 @export var max_hp: int = 100
 @export var max_speed: float = 100.0
 @export var accel: float = 640.0
@@ -70,10 +73,11 @@ func _aim() -> void:
 func _on_scrap_pickup_requested(by: Node, scrap: Node, amount: int) -> void:
 	if by != self: return
 	
-	EventBus.scrap_collected.emit(by, scrap, amount)
+	EventBus.scrap_gathered.emit(self, scrap)
+	scrap_state.collect(amount)
 
 
-func _on_unit_healed(by: Node, target: Node, amount: int) -> void:
+func _on_unit_healed(_by: Node, target: Node, amount: int) -> void:
 	if target != self or hp >= max_hp: return
 	
 	var old_hp = hp

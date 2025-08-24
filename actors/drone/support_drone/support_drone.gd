@@ -33,8 +33,8 @@ func _handle_aoe_body_exited(node: Node) -> void:
 		supported_nodes.remove_at(index)
 
 
-func _handle_unit_healed(by: Node, target: Node, amount: int) -> void:
-	if target != self: return
+func _handle_unit_healed(_by: Node, on: Node, amount: int) -> void:
+	if on != self: return
 	
 	hp = clamp(hp + amount, 0, max_hp)
 

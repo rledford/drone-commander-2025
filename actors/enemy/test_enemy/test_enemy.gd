@@ -13,4 +13,10 @@ func _handle_bullet_collided(with: Node, _vel: Vector2, damage: int) -> void:
 	hp -= damage
 	
 	if hp <= 0:
+		drop_scrap()
 		queue_free()
+
+
+func drop_scrap() -> void:
+	for i in randi_range(2,3):
+		EventBus.scrap_dropped.emit(global_position)

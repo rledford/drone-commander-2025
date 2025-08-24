@@ -1,5 +1,6 @@
 extends Drone
 
+@export var scrap_state: ScrapState
 @onready var dropzone: Area2D = $Dropzone
 
 @export var max_scrap: int = 3
@@ -112,16 +113,16 @@ func _on_scrap_pickup_requested(by: Node, scrap: Node, amount: int) -> void:
 	
 	total_scrap += amount
 
-	EventBus.scrap_picked_up.emit(self, scrap)
+	EventBus.scrap_gathered.emit(self, scrap)
 	
 	if total_scrap == max_scrap:
 		set_state(State.DROPOFF)
 
 
-func _on_dropzone_body_entered(by: Node) -> void:
+func _on_dropzone_body_entered(_by: Node) -> void:
 	if not total_scrap: return
 	
-	EventBus.scrap_delivered.emit(self, by, total_scrap)
+	scrap_state.collect(total_scrap)
 	
 	total_scrap = 0
 	

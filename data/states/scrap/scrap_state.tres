@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ScrapState" load_steps=2 format=3 uid="uid://bhnhdmk16lewp"]
+
+[ext_resource type="Script" uid="uid://druh70b61tqps" path="res://data/states/scrap/scrap_state.gd" id="1_7rqjr"]
+
+[resource]
+script = ExtResource("1_7rqjr")
+metadata/_custom_type_script = "uid://druh70b61tqps"

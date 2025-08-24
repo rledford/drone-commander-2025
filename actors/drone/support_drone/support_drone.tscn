@@ -15,6 +15,7 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_2wb2a")
 base_heal_amount = 5
+type = 3
 max_speed = 256.0
 scan_range = 1024.0
 metadata/_custom_type_script = "uid://rdwx1ep4fejj"

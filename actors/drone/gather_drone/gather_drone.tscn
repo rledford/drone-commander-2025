@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpj6awi0qwf6r"]
+[gd_scene load_steps=6 format=3 uid="uid://bpj6awi0qwf6r"]
 
 [ext_resource type="Script" uid="uid://qyu62i8kggm1" path="res://actors/drone/gather_drone/gather_drone.gd" id="1_36357"]
+[ext_resource type="Resource" uid="uid://bhnhdmk16lewp" path="res://data/states/scrap/scrap_state.tres" id="2_elyho"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_36357"]
 
@@ -14,6 +15,8 @@ radius = 7.81025
 collision_layer = 16
 collision_mask = 8
 script = ExtResource("1_36357")
+scrap_state = ExtResource("2_elyho")
+type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.563861, 0.0282466, 1, 1)

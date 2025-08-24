@@ -16,6 +16,7 @@ enum State {
 }
 
 
+@export var type: Enums.DroneType = Enums.DroneType.NONE
 @export var max_hp: int = 100
 @export var max_speed: float = 100.0
 @export var accel: float = 256.0
