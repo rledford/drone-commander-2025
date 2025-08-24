@@ -1,15 +1,12 @@
 extends Node
 
 enum DroneType {
+	NONE,
 	DAMAGE,
 	GATHER,
 	SUPPORT,
 }
 
-enum DroneState {
-	IDLE,
-	PATROL,
-}
 
 enum Team {
 	PLAYER,

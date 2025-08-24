@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://by0qoac7eocyx"]
+[gd_scene load_steps=5 format=3 uid="uid://by0qoac7eocyx"]
 
 [ext_resource type="Script" uid="uid://cc1coey7jtu50" path="res://actors/player/player.gd" id="1_nvxhs"]
+[ext_resource type="Resource" uid="uid://bhnhdmk16lewp" path="res://data/states/scrap/scrap_state.tres" id="2_ilk7j"]
+[ext_resource type="Resource" uid="uid://bkwdw180yu4ss" path="res://data/states/arsenal/player_arsenal_state.tres" id="3_ax26v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6uhly"]
 radius = 15.0333
@@ -8,6 +10,8 @@ radius = 15.0333
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 12
 script = ExtResource("1_nvxhs")
+scrap_state = ExtResource("2_ilk7j")
+arsenal = ExtResource("3_ax26v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6uhly")

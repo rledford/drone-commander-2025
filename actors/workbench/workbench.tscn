@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmrpgxq4n2bvx"]
+[gd_scene load_steps=6 format=3 uid="uid://bmrpgxq4n2bvx"]
 
 [ext_resource type="Script" uid="uid://6gyynrm170d3" path="res://actors/workbench/workbench.gd" id="1_6wh3t"]
 [ext_resource type="PackedScene" uid="uid://bi6nojwai0jqo" path="res://components/interactable_component/interactable_component.tscn" id="1_b2xr7"]
+[ext_resource type="Resource" uid="uid://bhnhdmk16lewp" path="res://data/states/scrap/scrap_state.tres" id="2_jmt3e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b2xr7"]
 size = Vector2(28, 70)
@@ -11,6 +12,7 @@ size = Vector2(14, 48)
 
 [node name="Workbench" type="Node2D"]
 script = ExtResource("1_6wh3t")
+scrap_store = ExtResource("2_jmt3e")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(0.653476, 0.667354, 0.652236, 1)

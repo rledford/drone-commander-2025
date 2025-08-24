@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ArsenalState" load_steps=2 format=3 uid="uid://sott1rktfh4e"]
+
+[ext_resource type="Script" uid="uid://bung43ih6fadc" path="res://data/states/arsenal/arsenal_state.gd" id="1_c53pk"]
+
+[resource]
+script = ExtResource("1_c53pk")
+gather_capacity = 999
+max_damage = 999
+max_support = 999
+metadata/_custom_type_script = "uid://bung43ih6fadc"

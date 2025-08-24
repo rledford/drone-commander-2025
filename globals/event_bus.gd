@@ -3,22 +3,21 @@ extends Node
 
 # player
 signal player_dead
-signal bullet_hit(bullet: Node, collision: KinematicCollision2D)
+signal bullet_collided(with: Node, velocity: Vector2, damage: int)
 signal bullet_fired(position: Vector2, direction: Vector2, speed: float, damage: int)
 signal bullet_expired(bullet: Node)
 
+# aoe
+signal unit_healed(by: Node, target: Node, amoutn: int)
+
+# drone
+signal drone_created(by: Node, drone: Node)
+signal drone_destroyed(by: Node, drone: Node)
+
 # scrap
 signal scrap_dropped(position: Vector2)
-signal scrap_collect_requested(by: Node, scrap: Node, amount: int)
-signal scrap_collected(by: Node, scrap: Node, amount: int)
-signal scrap_delivered(by: Node, to: Node, amount: int)
-signal total_scrap_changed(old_scrap: int, new_scrap: int)
-
-# crafting
-signal drone_craft_requested(by: Node, cost: int)
-signal drone_craft_request_rejected(to: Node, reason: String)
-signal drone_craft_request_accepted(to: Node)
-signal drone_craft_completed(by: Node, cost: int)
+signal scrap_gathered(by: Node, scrap: Node)
+signal scrap_pickup_requested(by: Node, scrap: Node, amount: int)
 
 # control point
 signal control_point_entered(by: Node)

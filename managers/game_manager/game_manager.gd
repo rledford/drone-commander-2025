@@ -4,8 +4,13 @@ class_name GameManager
 @export var pool_manager: PoolManager
 @export var bullet_container: Node
 @export var scrap_container: Node
+@export var drone_container: Node
 
-var _total_scrap: int = 0
+@export var player_arsenal: ArsenalState
+@export var station_arsenal: ArsenalState
+#@export var control_point_north_arsenal: ArsenalState
+#@export var control_point_west_arsenal: ArsenalState
+#@export var control_point_east_arsenal: ArsenalState
 
 func _ready() -> void:
 	register_pools()
@@ -17,16 +22,6 @@ func on_bullet_fired(position: Vector2, direction: Vector2, speed: float, damage
 	bullet.setup(position, direction, speed, damage)
 	
 	bullet_container.add_child(bullet)
-
-
-func on_bullet_hit(_bullet: Node, collision: KinematicCollision2D) -> void:
-	var collider := collision.get_collider() as Node2D
-	if collider.is_in_group(&"enemy"):
-		collider.queue_free()
-		var scrap_count = randi_range(2,3)
-		for _i in range(scrap_count):
-			EventBus.scrap_dropped.emit(collider.global_position)
-		
 
 
 func on_bullet_expired(bullet: Node) -> void:
@@ -46,40 +41,41 @@ func on_scrap_dropped(position: Vector2) -> void:
 	scrap_container.add_child(scrap)
 
 
-func on_scrap_collected(by: Node, scrap: Node, amount: int) -> void:
-	var old_scrap = _total_scrap
-	_total_scrap += amount
-	
+func on_scrap_gathered(_by: Node, scrap: Node) -> void:
 	pool_manager.get_pool(&"scrap").release(scrap)
+
+
+func on_drone_created(_by: Node, drone: Node) -> void:
+	# refactor with "type" after implementing drone stats resource
+	if not is_instance_of(drone, Drone):
+		push_error("invalid drone created %s" % drone)
 	
-	EventBus.total_scrap_changed.emit(old_scrap, _total_scrap)
-
-
-func on_scrap_delivered(by: Node, to: Node, amount: int) -> void:
-	print("delivered %s scrap" % amount)
-	var old_scrap = _total_scrap
-	_total_scrap += amount
-	EventBus.total_scrap_changed.emit(old_scrap, _total_scrap)
-
-
-func on_drone_craft_requested(by: Node, cost: int) -> void:
-	if _total_scrap < cost:
-		EventBus.drone_craft_request_rejected.emit(by, "Not enough scrap")
-	else:
-		var old_total_scrap = _total_scrap
-		_total_scrap -= cost
-		EventBus.total_scrap_changed.emit(old_total_scrap, _total_scrap)
-		EventBus.drone_craft_request_accepted.emit(by)
+	match (drone as Drone).type:
+		Enums.DroneType.DAMAGE:
+			if not player_arsenal.has_damage_capacity():
+				station_arsenal.add_damage_drone(drone)
+			else:
+				player_arsenal.add_damage_drone(drone)
+		Enums.DroneType.GATHER:
+			if not player_arsenal.has_gather_capacity():
+				station_arsenal.add_gather_drone(drone)
+			else:
+				player_arsenal.add_gather_drone(drone)
+		Enums.DroneType.SUPPORT:
+			if not player_arsenal.has_support_capacity():
+				station_arsenal.add_support_drone(drone)
+			else:
+				player_arsenal.add_support_drone(drone)
+	
+	drone_container.add_child(drone)
 
 
 func connect_signals():
+	EventBus.drone_created.connect(on_drone_created)
 	EventBus.scrap_dropped.connect(on_scrap_dropped)
-	EventBus.scrap_delivered.connect(on_scrap_delivered)
-	EventBus.scrap_collected.connect(on_scrap_collected)
+	EventBus.scrap_gathered.connect(on_scrap_gathered)
 	EventBus.bullet_fired.connect(on_bullet_fired)
-	EventBus.bullet_hit.connect(on_bullet_hit)
 	EventBus.bullet_expired.connect(on_bullet_expired)
-	EventBus.drone_craft_requested.connect(on_drone_craft_requested)
 
 
 func register_pools():

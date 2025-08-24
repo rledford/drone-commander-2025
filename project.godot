@@ -73,3 +73,4 @@ interact={
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Structure"
 2d_physics/layer_4="Pickup"
+2d_physics/layer_5="Drone"

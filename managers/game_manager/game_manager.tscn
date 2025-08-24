@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ixic0jq3dl22"]
+[gd_scene load_steps=4 format=3 uid="uid://ixic0jq3dl22"]
 
 [ext_resource type="Script" uid="uid://shsbcvgc6nge" path="res://managers/game_manager/game_manager.gd" id="1_atyjh"]
+[ext_resource type="Resource" uid="uid://bkwdw180yu4ss" path="res://data/states/arsenal/player_arsenal_state.tres" id="2_xl6yf"]
+[ext_resource type="Resource" uid="uid://sott1rktfh4e" path="res://data/states/arsenal/station_arsenal_state.tres" id="3_f7s5u"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_atyjh")
+player_arsenal = ExtResource("2_xl6yf")
+station_arsenal = ExtResource("3_f7s5u")
