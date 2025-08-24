@@ -7,6 +7,7 @@ class_name GameManager
 @export var drone_container: Node
 
 @export var player_arsenal: ArsenalState
+@export var station_arsenal: ArsenalState
 #@export var control_point_north_arsenal: ArsenalState
 #@export var control_point_west_arsenal: ArsenalState
 #@export var control_point_east_arsenal: ArsenalState
@@ -52,19 +53,19 @@ func on_drone_created(_by: Node, drone: Node) -> void:
 	match (drone as Drone).type:
 		Enums.DroneType.DAMAGE:
 			if not player_arsenal.has_damage_capacity():
-				# send to base
-				pass
-			player_arsenal.add_damage_drone(drone)
+				station_arsenal.add_damage_drone(drone)
+			else:
+				player_arsenal.add_damage_drone(drone)
 		Enums.DroneType.GATHER:
 			if not player_arsenal.has_gather_capacity():
-				# send to base
-				pass
-			player_arsenal.add_gather_drone(drone)
+				station_arsenal.add_gather_drone(drone)
+			else:
+				player_arsenal.add_gather_drone(drone)
 		Enums.DroneType.SUPPORT:
 			if not player_arsenal.has_support_capacity():
-				# send to base
-				pass
-			player_arsenal.add_support_drone(drone)
+				station_arsenal.add_support_drone(drone)
+			else:
+				player_arsenal.add_support_drone(drone)
 	
 	drone_container.add_child(drone)
 

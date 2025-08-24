@@ -31,9 +31,7 @@ func set_state(new_state: State) -> void:
 	match new_state:
 		State.IDLE:
 			attack_target = null
-			patrol_target = null
 		State.PATROL:
-			patrol_target = acquire_target_in_range(PLAYER)
 			plan_patrol_destination()
 		State.ATTACK:
 			pass
@@ -59,7 +57,7 @@ func _update_idle(delta: float) -> void:
 
 
 func _update_patrol(delta: float) -> void:
-	if not is_valid_target(patrol_target):
+	if not is_valid_target(commander):
 		set_state(State.IDLE)
 	
 	move_toward_target_position(patrol_destination, delta)

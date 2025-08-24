@@ -1,4 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcapq0a0qq6o6"]
+[gd_scene load_steps=5 format=3 uid="uid://bcapq0a0qq6o6"]
+
+[ext_resource type="Script" uid="uid://cmjkt50oaukqf" path="res://actors/station/station.gd" id="1_mtoxk"]
+[ext_resource type="Resource" uid="uid://sott1rktfh4e" path="res://data/states/arsenal/station_arsenal_state.tres" id="2_mos1t"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_i15ia"]
 
@@ -6,8 +9,11 @@
 size = Vector2(142, 20)
 
 [node name="Station" type="Node2D"]
+script = ExtResource("1_mtoxk")
+arsenal = ExtResource("2_mos1t")
 
 [node name="Wall" type="Node2D" parent="."]
+position = Vector2(0, -161)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall"]
@@ -22,7 +28,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_i15ia")
 
 [node name="Wall2" type="Node2D" parent="."]
-position = Vector2(-114, 47)
+position = Vector2(-114, -114)
 rotation = -0.785398
 metadata/_edit_group_ = true
 
@@ -38,7 +44,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_i15ia")
 
 [node name="Wall3" type="Node2D" parent="."]
-position = Vector2(-161, 161)
+position = Vector2(-161, 0)
 rotation = -1.5708
 metadata/_edit_group_ = true
 
@@ -54,7 +60,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_i15ia")
 
 [node name="Wall4" type="Node2D" parent="."]
-position = Vector2(-114, 275)
+position = Vector2(-114, 114)
 rotation = -2.35619
 metadata/_edit_group_ = true
 
@@ -70,7 +76,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_i15ia")
 
 [node name="Wall5" type="Node2D" parent="."]
-position = Vector2(0, 323)
+position = Vector2(0, 162)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall5"]
@@ -85,7 +91,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_i15ia")
 
 [node name="Wall6" type="Node2D" parent="."]
-position = Vector2(114, 276)
+position = Vector2(114, 115)
 rotation = 2.35619
 metadata/_edit_group_ = true
 
@@ -101,7 +107,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_i15ia")
 
 [node name="Wall7" type="Node2D" parent="."]
-position = Vector2(161, 162)
+position = Vector2(161, 1)
 rotation = 1.5708
 metadata/_edit_group_ = true
 

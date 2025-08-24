@@ -17,6 +17,7 @@ var _last_fire_time = -INF
 
 
 func _ready() -> void:
+	arsenal.commander = self
 	EventBus.scrap_pickup_requested.connect(_on_scrap_pickup_requested)
 	EventBus.unit_healed.connect(_on_unit_healed)
 	

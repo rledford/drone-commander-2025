@@ -35,7 +35,6 @@ func set_state(new_state: State) -> void:
 	if new_state == State.DROPOFF:
 		dropoff_target = acquire_target_in_range(PLAYER)
 	elif new_state == State.PATROL:
-		patrol_target = acquire_target_in_range(PLAYER)
 		plan_patrol_destination()
 
 
@@ -62,7 +61,7 @@ func _update_idle(delta: float) -> void:
 
 
 func _update_patrol(delta: float) -> void:
-	if not is_valid_target(patrol_target):
+	if not is_valid_target(commander):
 		set_state(State.IDLE)
 	
 	move_toward_target_position(patrol_destination, delta)

@@ -30,9 +30,10 @@ enum State {
 var speed_scale: float = 1.0
 
 var patrol_destination: Vector2
-var patrol_target: Node
 var state: int = State.IDLE
 var scan_times := {} # { StringName: TicksMilliseconds }
+
+var commander: Node
 
 func set_state(new_state: int) -> void:
 	state = new_state
@@ -81,14 +82,14 @@ func drift(delta: float) -> void:
 
 
 func plan_patrol_destination() -> void:
-	if not is_valid_target(patrol_target):
+	if not is_valid_target(commander):
 		patrol_destination = Vector2(global_position)
 	
 	var random_dir = Vector2.RIGHT.rotated(randf() * TAU)
 	var random_dist = randf_range(patrol_range * 0.5, patrol_range)
 	
 	patrol_destination = (
-		Vector2(patrol_target.global_position) + random_dir * random_dist
+		Vector2(commander.global_position) + random_dir * random_dist
 	)
 
 

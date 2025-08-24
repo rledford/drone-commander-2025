@@ -8,6 +8,7 @@ signal updated
 @export var max_support: int = 3
 
 
+var commander: Node
 var gather_drones: Array[Node] = []
 var damage_drones: Array[Node] = []
 var support_drones: Array[Node] = []
@@ -51,6 +52,7 @@ func has_support_capacity() -> bool:
 
 func _add(to: Array[Node], node: Node) -> void:
 	to.append(node)
+	node.set(&"commander", commander)
 	updated.emit()
 
 

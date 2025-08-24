@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6q8wks4ev5mq"]
+[gd_scene load_steps=10 format=3 uid="uid://b6q8wks4ev5mq"]
 
 [ext_resource type="PackedScene" uid="uid://ixic0jq3dl22" path="res://managers/game_manager/game_manager.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://by0qoac7eocyx" path="res://actors/player/player.tscn" id="2_0xm2m"]
-[ext_resource type="Resource" uid="uid://bkwdw180yu4ss" path="res://data/states/arsenal/player_arsenal_state.tres" id="2_efxa6"]
 [ext_resource type="PackedScene" uid="uid://biqfrlv8afh32" path="res://managers/pool_manager/pool_manager.tscn" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bmrpgxq4n2bvx" path="res://actors/workbench/workbench.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c2peryne0m35g" path="res://actors/enemy/test_enemy/test_enemy.tscn" id="5_7mycd"]
@@ -18,7 +17,6 @@ pool_manager = NodePath("../PoolManager")
 bullet_container = NodePath("../World/Bullets")
 scrap_container = NodePath("../World/Scrap")
 drone_container = NodePath("../World/Drones")
-player_arsenal = ExtResource("2_efxa6")
 
 [node name="PoolManager" parent="." instance=ExtResource("2_lquwl")]
 
@@ -75,7 +73,7 @@ position = Vector2(546, 86)
 [node name="Station" type="Node" parent="World"]
 
 [node name="Station" parent="World/Station" instance=ExtResource("7_272bh")]
-position = Vector2(289, 217)
+position = Vector2(285, 381)
 
 [node name="Drones" type="Node" parent="World"]
 
