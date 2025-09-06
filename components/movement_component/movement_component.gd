@@ -47,8 +47,9 @@ func keep_distance_node(to: Node, desired_distance: float, tolerance: float) -> 
 func keep_range_node(to: Node, desired_range: float, _delta: float) -> void:
 	var global_position = get_parent().global_position
 	var dist_squared = global_position.distance_squared_to(to.global_position)
+	
 	if dist_squared < pow(desired_range, 2):
-		return
+		return drift()
 	
 	var direction_to_move = global_position.direction_to(to.global_position)
 	var distance_error = sqrt(dist_squared) - desired_range
