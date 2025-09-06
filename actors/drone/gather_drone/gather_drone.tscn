@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpj6awi0qwf6r"]
+[gd_scene load_steps=10 format=3 uid="uid://bpj6awi0qwf6r"]
 
 [ext_resource type="Script" uid="uid://qyu62i8kggm1" path="res://actors/drone/gather_drone/gather_drone.gd" id="1_36357"]
 [ext_resource type="Resource" uid="uid://bhnhdmk16lewp" path="res://data/states/scrap/scrap_state.tres" id="2_elyho"]
+[ext_resource type="PackedScene" uid="uid://crv7f3ctrbfa7" path="res://components/velocity_component/velocity_component.tscn" id="3_b18dc"]
+[ext_resource type="PackedScene" uid="uid://cqqu606te0jf7" path="res://components/movement_component/movement_component.tscn" id="4_vgjgf"]
+[ext_resource type="PackedScene" uid="uid://ddj37b6whg8xy" path="res://components/patrol_component/patrol_component.tscn" id="5_hspnx"]
+[ext_resource type="PackedScene" uid="uid://xnxhas5y014y" path="res://components/proximity_component/proximity_component.tscn" id="6_vgjgf"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_36357"]
 
@@ -31,3 +35,17 @@ shape = SubResource("CircleShape2D_36357")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_elyho")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("3_b18dc")]
+max_speed = 192.0
+acceleration_coefficient = 2.5
+
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("velocity_component") instance=ExtResource("4_vgjgf")]
+velocity_component = NodePath("../VelocityComponent")
+
+[node name="PatrolComponent" parent="." node_paths=PackedStringArray("movement_component") instance=ExtResource("5_hspnx")]
+movement_component = NodePath("../MovementComponent")
+
+[node name="ProximityComponent" parent="." instance=ExtResource("6_vgjgf")]
+scan_range = 256.0
+scan_frequency_limit = 0.5

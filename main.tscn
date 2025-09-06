@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6q8wks4ev5mq"]
+[gd_scene load_steps=11 format=3 uid="uid://b6q8wks4ev5mq"]
 
 [ext_resource type="PackedScene" uid="uid://ixic0jq3dl22" path="res://managers/game_manager/game_manager.tscn" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://by0qoac7eocyx" path="res://actors/player/player.tscn" id="2_0xm2m"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bcapq0a0qq6o6" path="res://actors/station/station.tscn" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://bkxnvn4076qs1" path="res://actors/drone/damage_drone/damage_drone.tscn" id="9_kek77"]
 [ext_resource type="PackedScene" uid="uid://fd6soodr1wlb" path="res://actors/drone/support_drone/support_drone.tscn" id="10_4c57u"]
+[ext_resource type="PackedScene" uid="uid://birmo0ki7trx5" path="res://actors/drone/comp_drone/comp_drone.tscn" id="10_efxa6"]
 
 [node name="Main" type="Node2D"]
 
@@ -76,5 +77,8 @@ position = Vector2(546, 86)
 position = Vector2(285, 381)
 
 [node name="Drones" type="Node" parent="World"]
+
+[node name="CompDrone" parent="World/Drones" instance=ExtResource("10_efxa6")]
+position = Vector2(414, 120)
 
 [node name="UI" type="CanvasLayer" parent="."]

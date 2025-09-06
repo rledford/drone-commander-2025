@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://by0qoac7eocyx"]
+[gd_scene load_steps=7 format=3 uid="uid://by0qoac7eocyx"]
 
 [ext_resource type="Script" uid="uid://cc1coey7jtu50" path="res://actors/player/player.gd" id="1_nvxhs"]
 [ext_resource type="Resource" uid="uid://bhnhdmk16lewp" path="res://data/states/scrap/scrap_state.tres" id="2_ilk7j"]
 [ext_resource type="Resource" uid="uid://bkwdw180yu4ss" path="res://data/states/arsenal/player_arsenal_state.tres" id="3_ax26v"]
+[ext_resource type="PackedScene" uid="uid://crv7f3ctrbfa7" path="res://components/velocity_component/velocity_component.tscn" id="4_6p1w3"]
+[ext_resource type="PackedScene" uid="uid://dav5ods4xy6wt" path="res://components/health_component/health_component.tscn" id="5_15y17"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6uhly"]
 radius = 15.0333
@@ -12,6 +14,11 @@ collision_mask = 12
 script = ExtResource("1_nvxhs")
 scrap_state = ExtResource("2_ilk7j")
 arsenal = ExtResource("3_ax26v")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("4_6p1w3")]
+max_speed = 128.0
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_15y17")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6uhly")
