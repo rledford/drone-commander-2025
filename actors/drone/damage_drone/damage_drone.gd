@@ -72,9 +72,6 @@ func _update_patrol(delta: float) -> void:
 	
 	if is_valid_target(attack_target):
 		return state_machine.change_state(ATTACK_STATE)
-	
-	if has_arrived_at_position(patrol_destination):
-		return state_machine.change_state(IDLE_STATE)
 
 
 func _update_attack(_delta: float) -> void:
