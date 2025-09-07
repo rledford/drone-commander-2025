@@ -20,7 +20,7 @@ collision_layer = 16
 collision_mask = 8
 script = ExtResource("1_36357")
 scrap_state = ExtResource("2_elyho")
-type = 1
+type = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.563861, 0.0282466, 1, 1)

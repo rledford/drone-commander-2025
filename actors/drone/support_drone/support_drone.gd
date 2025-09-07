@@ -67,7 +67,10 @@ func _update_idle(_delta: float) -> void:
 	_heal()
 	
 	movement_component.drift()
-	target = proximity_component.acquire_closest_target(PLAYER, INF)
+	target = proximity_component.acquire_closest_target(
+		Constants.PLAYER_GROUP,
+		INF
+	)
 	
 	if is_valid_target(target):
 		return state_machine.change_state(FOLLOW_STATE)

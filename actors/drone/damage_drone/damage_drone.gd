@@ -4,12 +4,11 @@ const IDLE_STATE = &"idle"
 const PATROL_STATE = &"patrol"
 const ATTACK_STATE = &"attack"
 
+@export var attack_range: float = 128.0
 @export var attack_distance_tolerance: float = 32.0
 @export var fire_rate: float = 0.5
 @export var bullet_speed: float = 512.0
 @export var bullet_damage: int = 50
-
-@onready var attack_range: float = scan_range + attack_distance_tolerance * 0.5
 
 @onready var velocity_component: VelocityComponent = $VelocityComponent
 @onready var movement_component: MovementComponent = $MovementComponent
@@ -86,5 +85,5 @@ func _update_attack(_delta: float) -> void:
 
 
 func _scan_for_attack_target() -> void:
-	attack_target = proximity_component.scan_for_target(ENEMY)
+	attack_target = proximity_component.scan_for_target(Constants.ENEMY_GROUP)
 	

@@ -38,7 +38,10 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_enter_dropoff() -> void:
-	dropoff_target = proximity_component.acquire_closest_target(PLAYER, INF)
+	dropoff_target = proximity_component.acquire_closest_target(
+		Constants.PLAYER_GROUP,
+		INF
+	)
 
 
 func _on_enter_patrol() -> void:
@@ -46,7 +49,7 @@ func _on_enter_patrol() -> void:
 
 
 func _scan_for_pickups() -> void:
-	pickup_target = proximity_component.scan_for_target(SCRAP)
+	pickup_target = proximity_component.scan_for_target(Constants.SCRAP_GROUP)
 
 
 func _update_idle(_delta: float) -> void:
