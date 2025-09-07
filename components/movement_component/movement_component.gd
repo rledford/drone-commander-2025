@@ -21,30 +21,7 @@ func move_toward_position(to: Vector2) -> void:
 	)
 
 
-func keep_distance_node(to: Node, desired_distance: float, tolerance: float) -> void:
-	var global_position: Vector2 = get_parent().global_position
-	var dist = to.distance_to(global_position)
-	# var direction_to_move = Vector2.ZERO
-	var distance_error: float = 0.0
-	
-	if dist < desired_distance - tolerance:
-		# move away
-		# direction_to_move = to.global_position.direction_to(global_position)
-		distance_error = desired_distance - tolerance - dist
-	elif dist > desired_distance + tolerance:
-		# move toward
-		# direction_to_move = global_position.direction_to(to.global_position)
-		distance_error = dist - (desired_distance + tolerance)
-	else:
-		drift()
-	
-	# var speed = clamp(distance_error, 0, velocity_component.max_speed)
-	# var pos = Vector2(global_position + (direction_to_move * speed))
-	
-	move_toward_position(to.global_position)
-
-
-func keep_range_node(to: Node, desired_range: float, _delta: float) -> void:
+func keep_range_node(to: Node, desired_range: float) -> void:
 	var global_position = get_parent().global_position
 	var dist_squared = global_position.distance_squared_to(to.global_position)
 	

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctskuqhora2jm"]
+
+[ext_resource type="Script" uid="uid://cmhu7fakwrdyl" path="res://components/area_of_effect_component/area_of_effect_component.gd" id="1_wx0p8"]
+
+[node name="AreaOfEffectComponent" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+input_pickable = false
+script = ExtResource("1_wx0p8")

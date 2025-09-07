@@ -14,10 +14,18 @@
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("1_o51f5")
+attack_distance_tolerance = null
+fire_rate = null
+bullet_speed = null
+bullet_damage = null
 type = 2
+max_hp = null
 max_speed = 192.0
 accel = 288.0
 decel = 192.0
+patrol_range = null
+scan_range = null
+scan_frequency = null
 metadata/_custom_type_script = "uid://rdwx1ep4fejj"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

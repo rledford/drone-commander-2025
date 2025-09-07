@@ -1,13 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://fd6soodr1wlb"]
+[gd_scene load_steps=10 format=3 uid="uid://fd6soodr1wlb"]
 
 [ext_resource type="Script" uid="uid://blwvjl7nkxw7r" path="res://actors/drone/support_drone/support_drone.gd" id="1_2wb2a"]
+[ext_resource type="Script" uid="uid://bxowsomj1spt4" path="res://components/health_component/health_component.gd" id="2_e6sej"]
+[ext_resource type="Script" uid="uid://o5bpbgn1jxbe" path="res://components/velocity_component/velocity_component.gd" id="2_th1iw"]
+[ext_resource type="Script" uid="uid://7jyukcq56inb" path="res://components/movement_component/movement_component.gd" id="3_uiog8"]
+[ext_resource type="Script" uid="uid://cmhu7fakwrdyl" path="res://components/area_of_effect_component/area_of_effect_component.gd" id="4_uiog8"]
+[ext_resource type="Script" uid="uid://djmgjcwkbn2jv" path="res://components/proximity_component/proximity_component.gd" id="5_htbc3"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_2wb2a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eja55"]
 radius = 11.0454
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_th1iw"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_uiog8"]
 radius = 192.0
 
 [node name="SupportDrone" type="CharacterBody2D"]
@@ -20,6 +25,26 @@ max_speed = 256.0
 scan_range = 1024.0
 metadata/_custom_type_script = "uid://rdwx1ep4fejj"
 
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_e6sej")
+max_hp = 100
+metadata/_custom_type_script = "uid://bxowsomj1spt4"
+
+[node name="VelocityComponent" type="Node" parent="."]
+script = ExtResource("2_th1iw")
+acceleration_coefficient = 3.5
+metadata/_custom_type_script = "uid://o5bpbgn1jxbe"
+
+[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("velocity_component")]
+script = ExtResource("3_uiog8")
+velocity_component = NodePath("../VelocityComponent")
+metadata/_custom_type_script = "uid://7jyukcq56inb"
+
+[node name="ProximityComponent" type="Node" parent="."]
+script = ExtResource("5_htbc3")
+scan_range = 192.0
+metadata/_custom_type_script = "uid://djmgjcwkbn2jv"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(3.7542e-06, 0.636245, 0.170035, 1)
 scale = Vector2(24, 24)
@@ -28,8 +53,12 @@ texture = SubResource("CanvasTexture_2wb2a")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_eja55")
 
-[node name="AoE" type="Area2D" parent="."]
+[node name="AreaOfEffectComponent" type="Area2D" parent="."]
 collision_mask = 17
+input_pickable = false
+script = ExtResource("4_uiog8")
+radius = 192.0
+metadata/_custom_type_script = "uid://cmhu7fakwrdyl"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AoE"]
-shape = SubResource("CircleShape2D_th1iw")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaOfEffectComponent"]
+shape = SubResource("CircleShape2D_uiog8")

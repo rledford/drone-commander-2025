@@ -1,63 +1,51 @@
 @tool
 extends Drone
 
+const IDLE_STATE = &"idle"
+const FOLLOW_STATE = &"follow"
+
 @export var heal_rate: float = 3.0
 @export var base_heal_amount: int = 30
-@export var aoe_radius: float = 192.0:
-	set(value):
-		aoe_radius = value
-		_update_aoe_area()
 
-@onready var aoe: Area2D = $AoE
-@onready var aoe_shape_2d: CollisionShape2D = $AoE/CollisionShape2D
+@onready var health_component: HealthComponent = $HealthComponent
+@onready var velocity_component: VelocityComponent = $VelocityComponent
+@onready var movement_component: MovementComponent = $MovementComponent
+@onready var aoe_component: AreaOfEffectComponent = $AreaOfEffectComponent
+@onready var proximity_component: ProximityComponent = $ProximityComponent
 
 var target: Node
-var supported_nodes: Array[Node] = []
+var state_machine: CallableStateMachine
 var _last_heal_time = -INF
 
 
 func _ready() -> void:
-	aoe.body_entered.connect(_handle_aoe_body_entered)
-	aoe.body_exited.connect(_handle_aoe_body_exited)
 	EventBus.unit_healed.connect(_handle_unit_healed)
-
-
-func _handle_aoe_body_entered(node: Node) ->void:
-	supported_nodes.append(node)
-
-
-func _handle_aoe_body_exited(node: Node) -> void:
-	var index = supported_nodes.find(node)
 	
-	if index >= 0:
-		supported_nodes.remove_at(index)
+	state_machine = CallableStateMachine.new()
+	state_machine.add_state(IDLE_STATE, Callable(), _update_idle, Callable())
+	state_machine.add_state(FOLLOW_STATE, Callable(), _update_follow, Callable())
+	state_machine.change_state(IDLE_STATE)
 
 
 func _handle_unit_healed(_by: Node, on: Node, amount: int) -> void:
 	if on != self: return
 	
-	hp = clamp(hp + amount, 0, max_hp)
+	health_component.heal(amount)
 
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
-	match state:
-		State.IDLE:
-			_update_idle(delta)
-		State.FOLLOW:
-			_update_follow(delta)
-	
-	heal_supported_nodes()
-	move_and_slide()
+	state_machine.update(delta)
+	velocity_component.move(self)
 
 
-func heal_supported_nodes() -> void:
+func _heal() -> void:
 	if not can_heal(): return
 	
 	_last_heal_time = Time.get_ticks_msec()
 	
-	for node in supported_nodes:
+	for node in aoe_component.nodes_in_area:
 		EventBus.unit_healed.emit(self, node, base_heal_amount)
 	
 	if hp < max_hp:
@@ -68,38 +56,30 @@ func can_heal() -> bool:
 	if _last_heal_time + heal_rate * 1000.0 > Time.get_ticks_msec():
 		return false
 	
-	if len(supported_nodes) == 0 and hp >= max_hp:
+	if len(aoe_component.nodes_in_area) == 0 and hp >= max_hp:
 		return false
 	
 	return true
 
 
 func _update_idle(delta: float) -> void:
-	drift(delta)
-	target = scan_for_target(PLAYER)
+	_heal()
+	
+	movement_component.drift()
+	target = proximity_component.acquire_closest_target(PLAYER, INF)
 	
 	if is_valid_target(target):
-		set_state(State.FOLLOW)
+		return state_machine.change_state(FOLLOW_STATE)
 
 
 func _update_follow(delta: float) -> void:
+	_heal()
+	
 	if not is_valid_target(target):
-		set_state(State.IDLE)
-		return
+		return state_machine.change_state(IDLE_STATE)
 	
-	if is_in_range(target, aoe_radius):
-		var target_speed = target.get("max_speed")
-		speed_scale = target_speed / max_speed if target_speed else 1.0
-		drift(delta)
-	else:
-		speed_scale = 1.0
-	
-	keep_target_in_range(target, aoe_radius * 0.85, delta)
+	movement_component.keep_range_node(target, aoe_component.radius * 0.85)
+
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, aoe_radius, Color.GREEN, false)
-
-
-func _update_aoe_area() -> void:
-	var shape: CircleShape2D = aoe_shape_2d.shape
-	shape.radius = aoe_radius
+	draw_circle(Vector2.ZERO, aoe_component.radius, Color.GREEN, false)

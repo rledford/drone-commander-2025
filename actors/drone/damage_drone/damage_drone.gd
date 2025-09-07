@@ -78,7 +78,7 @@ func _update_attack(_delta: float) -> void:
 	if not is_valid_target(attack_target):
 		return state_machine.change_state(IDLE_STATE)
 	
-	movement_component.keep_range_node(attack_target, attack_range, attack_distance_tolerance)
+	movement_component.keep_range_node(attack_target, attack_range)
 	
 	if not proximity_component.is_in_range(attack_target, attack_range) or not can_fire(): return
 	
