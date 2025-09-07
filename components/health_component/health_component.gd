@@ -17,6 +17,9 @@ func is_depleted() -> bool:
 	return hp <= 0
 
 
+func is_damaged() -> bool:
+	return hp > 0 and hp < max_hp
+
 func take_damage(amount: int) -> void:
 	if amount < 0: return
 	

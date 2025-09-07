@@ -19,6 +19,8 @@ var _last_heal_time = -INF
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
+	
 	EventBus.unit_healed.connect(_handle_unit_healed)
 	
 	state_machine = CallableStateMachine.new()
@@ -48,21 +50,20 @@ func _heal() -> void:
 	for node in aoe_component.nodes_in_area:
 		EventBus.unit_healed.emit(self, node, base_heal_amount)
 	
-	if hp < max_hp:
-		EventBus.unit_healed.emit(self, self, base_heal_amount)
+	EventBus.unit_healed.emit(self, self, base_heal_amount)
 
 
 func can_heal() -> bool:
 	if _last_heal_time + heal_rate * 1000.0 > Time.get_ticks_msec():
 		return false
 	
-	if len(aoe_component.nodes_in_area) == 0 and hp >= max_hp:
+	if len(aoe_component.nodes_in_area) == 0 and not health_component.is_damaged():
 		return false
 	
 	return true
 
 
-func _update_idle(delta: float) -> void:
+func _update_idle(_delta: float) -> void:
 	_heal()
 	
 	movement_component.drift()
@@ -72,7 +73,7 @@ func _update_idle(delta: float) -> void:
 		return state_machine.change_state(FOLLOW_STATE)
 
 
-func _update_follow(delta: float) -> void:
+func _update_follow(_delta: float) -> void:
 	_heal()
 	
 	if not is_valid_target(target):
