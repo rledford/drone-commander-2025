@@ -1,39 +1,47 @@
 extends Node
 class_name HealthComponent
 
-@export var health: int = 1
-@export var max_health: int = 1
+@export var max_hp: int = 1
 
-signal health_changed(new_health: int, old_health: int)
-signal max_health_changed(new_max_health: int, old_max_health: int)
-signal health_depleted
+var hp: int = 0
+
+signal changed(new_hp: int, old_hp: int)
+signal max_changed(new_max_hp: int, old_max_hp: int)
+signal depleted
 
 func _ready() -> void:
-	health = max_health
+	hp = max_hp
 
+
+func is_depleted() -> bool:
+	return hp <= 0
+
+
+func is_damaged() -> bool:
+	return hp > 0 and hp < max_hp
 
 func take_damage(amount: int) -> void:
 	if amount < 0: return
 	
-	var old_health = health
-	health = clamp(health - amount, 0, max_health)
-	health_changed.emit(health, old_health)
+	var old_hp = hp
+	hp = clamp(hp - amount, 0, max_hp)
+	changed.emit(hp, old_hp)
 
-	if health == 0:
-		health_depleted.emit()
+	if hp == 0:
+		depleted.emit()
 
 
 func heal(amount: int) -> void:
-	if amount < 0: return
+	if amount <= 0 or hp >= max_hp: return
 	
-	var old_health = health
-	health = clamp(health + amount, 0, max_health)
-	health_changed.emit(health, old_health)
+	var old_hp = hp
+	hp = clamp(hp + amount, 0, max_hp)
+	changed.emit(hp, old_hp)
 
 
-func set_max_health(new_max: int) -> void:
+func set_max(new_max: int) -> void:
 	if new_max < 1: return
 	
-	var old_max_health = health
-	max_health = new_max
-	max_health_changed.emit(max_health, old_max_health)
+	var old_max_hp = hp
+	max_hp = new_max
+	max_changed.emit(max_hp, old_max_hp)

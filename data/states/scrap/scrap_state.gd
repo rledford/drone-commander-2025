@@ -4,7 +4,7 @@ class_name ScrapState
 signal collected(amount: int)
 signal scrap_updated(from: int, to: int)
 
-var scrap: int = 10:
+var scrap: int = 100:
 	set = _set_scrap
 
 

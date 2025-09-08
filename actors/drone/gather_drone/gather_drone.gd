@@ -1,90 +1,92 @@
 extends Drone
 
-@export var scrap_state: ScrapState
-@onready var dropzone: Area2D = $Dropzone
+const IDLE_STATE = &"idle"
+const PATROL_STATE = &"patrol"
+const GATHER_STATE = &"gather"
+const DROPOFF_STATE = &"dropoff"
 
+@export var scrap_state: ScrapState
 @export var max_scrap: int = 3
+
+@onready var dropzone: Area2D = $Dropzone
+@onready var velocity_component: VelocityComponent = $VelocityComponent
+@onready var movement_component: MovementComponent = $MovementComponent
+@onready var patrol_component: PatrolComponent = $PatrolComponent
+@onready var proximity_component: ProximityComponent = $ProximityComponent
 
 var total_scrap: int = 0
 var pickup_target: Node
 var dropoff_target: Node
-
+var state_machine: CallableStateMachine
 
 
 func _ready() -> void:
 	EventBus.scrap_pickup_requested.connect(_on_scrap_pickup_requested)
 	dropzone.body_entered.connect(_on_dropzone_body_entered)
+	
+	state_machine = CallableStateMachine.new()
+	state_machine.add_state(IDLE_STATE, Callable(), _update_idle, Callable())
+	state_machine.add_state(PATROL_STATE, _on_enter_patrol, _update_patrol, Callable())
+	state_machine.add_state(GATHER_STATE, Callable(), _update_gather, Callable())
+	state_machine.add_state(DROPOFF_STATE, _on_enter_dropoff, _update_dropoff, Callable())
+	state_machine.change_state(IDLE_STATE)
 
 
 func _physics_process(delta: float) -> void:
-	match state:
-		State.IDLE:
-			_update_idle(delta)
-		State.PATROL:
-			_update_patrol(delta)
-		State.GATHER:
-			_update_gather(delta)
-		State.DROPOFF:
-			_update_dropoff(delta)
-	
-	move_and_slide()
+	state_machine.update(delta)
+	velocity_component.move(self)
 
-func set_state(new_state: State) -> void:
-	super.set_state(new_state)
-	
-	if new_state == State.DROPOFF:
-		dropoff_target = acquire_target_in_range(PLAYER)
-	elif new_state == State.PATROL:
-		plan_patrol_destination()
+
+func _on_enter_dropoff() -> void:
+	dropoff_target = proximity_component.acquire_closest_target(
+		Constants.PLAYER_GROUP,
+		INF
+	)
+
+
+func _on_enter_patrol() -> void:
+	patrol_component.target_node = commander
 
 
 func _scan_for_pickups() -> void:
-	pickup_target = scan_for_target(SCRAP)
+	pickup_target = proximity_component.scan_for_target(Constants.SCRAP_GROUP)
 
 
-func _update_idle(delta: float) -> void:
-	drift(delta)
+func _update_idle(_delta: float) -> void:
+	movement_component.drift()
 	
 	if has_pickup_capacity():
 		_scan_for_pickups()
 		if is_valid_target(pickup_target):
-			set_state(State.GATHER)
-			return
+			return state_machine.change_state(GATHER_STATE)
 	
 	if can_drop_off():
-		set_state(State.DROPOFF)
-		return
+		return state_machine.change_state(DROPOFF_STATE)
 	
-	if velocity.is_zero_approx():
-		set_state(State.PATROL)
-		return
+	if is_valid_target(commander):
+		return state_machine.change_state(PATROL_STATE)
 
 
 func _update_patrol(delta: float) -> void:
 	if not is_valid_target(commander):
-		set_state(State.IDLE)
-	
-	move_toward_target_position(patrol_destination, delta)
+		return state_machine.change_state(IDLE_STATE)
+		
+	patrol_component.update(delta)
 	
 	if has_pickup_capacity():
 		_scan_for_pickups()
 		if is_valid_target(pickup_target):
-			set_state(State.GATHER)
-			return
-	
-	if has_arrived_at_position(patrol_destination):
-		set_state(State.IDLE)
-		return
+			return state_machine.change_state(GATHER_STATE)
 
 
-func _update_gather(delta: float) -> void:
+func _update_gather(_delta: float) -> void:
 	if not is_valid_target(pickup_target):
-		set_state(State.IDLE)
+		return state_machine.change_state(IDLE_STATE)
 	
-	move_toward_target_node(pickup_target, delta)
+	movement_component.move_toward_node(pickup_target)
 	
 	if must_drop_off():
-		set_state(State.DROPOFF)
+		return state_machine.change_state(DROPOFF_STATE)
 
 
 func has_pickup_capacity() -> bool:
@@ -99,11 +101,11 @@ func must_drop_off() -> bool:
 	return total_scrap >= max_scrap
 
 
-func _update_dropoff(delta: float) -> void:
+func _update_dropoff(_delta: float) -> void:
 	if not is_valid_target(dropoff_target):
-		set_state(State.IDLE)
+		return state_machine.change_state(IDLE_STATE)
 	
-	move_toward_target_node(dropoff_target, delta)
+	movement_component.move_toward_node(dropoff_target)
 
 
 func _on_scrap_pickup_requested(by: Node, scrap: Node, amount: int) -> void:
@@ -115,7 +117,7 @@ func _on_scrap_pickup_requested(by: Node, scrap: Node, amount: int) -> void:
 	EventBus.scrap_gathered.emit(self, scrap)
 	
 	if total_scrap == max_scrap:
-		set_state(State.DROPOFF)
+		return state_machine.change_state(DROPOFF_STATE)
 
 
 func _on_dropzone_body_entered(_by: Node) -> void:
@@ -125,7 +127,7 @@ func _on_dropzone_body_entered(_by: Node) -> void:
 	
 	total_scrap = 0
 	
-	set_state(State.IDLE)
+	return state_machine.change_state(IDLE_STATE)
 
 
 func _draw():

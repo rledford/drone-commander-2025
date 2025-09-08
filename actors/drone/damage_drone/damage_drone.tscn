@@ -1,6 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkxnvn4076qs1"]
+[gd_scene load_steps=8 format=3 uid="uid://bkxnvn4076qs1"]
 
 [ext_resource type="Script" uid="uid://dyi45038vtrvp" path="res://actors/drone/damage_drone/damage_drone.gd" id="1_o51f5"]
+[ext_resource type="PackedScene" uid="uid://crv7f3ctrbfa7" path="res://components/velocity_component/velocity_component.tscn" id="2_2k3sw"]
+[ext_resource type="PackedScene" uid="uid://cqqu606te0jf7" path="res://components/movement_component/movement_component.tscn" id="3_l4of6"]
+[ext_resource type="PackedScene" uid="uid://ddj37b6whg8xy" path="res://components/patrol_component/patrol_component.tscn" id="4_f2vfh"]
+[ext_resource type="PackedScene" uid="uid://xnxhas5y014y" path="res://components/proximity_component/proximity_component.tscn" id="5_ip3iw"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_o51f5"]
 
@@ -10,10 +14,7 @@
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("1_o51f5")
-type = 2
-max_speed = 192.0
-accel = 288.0
-decel = 192.0
+type = 1
 metadata/_custom_type_script = "uid://rdwx1ep4fejj"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -23,3 +24,17 @@ texture = SubResource("CanvasTexture_o51f5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cm170")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("2_2k3sw")]
+max_speed = 192.0
+acceleration_coefficient = 1.5
+
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("velocity_component") instance=ExtResource("3_l4of6")]
+velocity_component = NodePath("../VelocityComponent")
+
+[node name="PatrolComponent" parent="." node_paths=PackedStringArray("movement_component") instance=ExtResource("4_f2vfh")]
+movement_component = NodePath("../MovementComponent")
+
+[node name="ProximityComponent" parent="." instance=ExtResource("5_ip3iw")]
+scan_range = 256.0
+scan_frequency_limit = 1.0

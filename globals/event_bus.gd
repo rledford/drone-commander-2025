@@ -1,6 +1,5 @@
 extends Node
 
-
 # player
 signal player_dead
 signal bullet_collided(with: Node, velocity: Vector2, damage: int)

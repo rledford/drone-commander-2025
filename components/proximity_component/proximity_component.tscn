@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://xnxhas5y014y"]
+
+[ext_resource type="Script" uid="uid://djmgjcwkbn2jv" path="res://components/proximity_component/proximity_component.gd" id="1_bjxcl"]
+
+[node name="ProximityComponent" type="Node"]
+script = ExtResource("1_bjxcl")

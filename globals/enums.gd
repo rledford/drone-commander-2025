@@ -7,7 +7,6 @@ enum DroneType {
 	SUPPORT,
 }
 
-
 enum Team {
 	PLAYER,
 	ENEMY,

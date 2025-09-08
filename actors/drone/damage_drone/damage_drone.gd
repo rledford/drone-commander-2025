@@ -1,40 +1,46 @@
 extends Drone
 
+const IDLE_STATE = &"idle"
+const PATROL_STATE = &"patrol"
+const ATTACK_STATE = &"attack"
+
+@export var attack_range: float = 128.0
 @export var attack_distance_tolerance: float = 32.0
 @export var fire_rate: float = 0.5
 @export var bullet_speed: float = 512.0
 @export var bullet_damage: int = 50
 
-@onready var attack_range: float = scan_range + attack_distance_tolerance * 0.5
+@onready var velocity_component: VelocityComponent = $VelocityComponent
+@onready var movement_component: MovementComponent = $MovementComponent
+@onready var patrol_component: PatrolComponent = $PatrolComponent
+@onready var proximity_component: ProximityComponent = $ProximityComponent
 
 var attack_target: Node
 var keep_in_range_position: Vector2
+var state_machine: CallableStateMachine
 
 var _last_fire_time: float = -INF
 
 
+func _ready() -> void:
+	state_machine = CallableStateMachine.new()
+	state_machine.add_state(IDLE_STATE, _on_enter_idle, _update_idle, Callable())
+	state_machine.add_state(PATROL_STATE, _on_enter_patrol, _update_patrol, Callable())
+	state_machine.add_state(ATTACK_STATE, Callable(), _update_attack, Callable())
+	state_machine.change_state(IDLE_STATE)
+
+
 func _physics_process(delta: float) -> void:
-	match state:
-		State.IDLE:
-			_update_idle(delta)
-		State.PATROL:
-			_update_patrol(delta)
-		State.ATTACK:
-			_update_attack(delta)
-	
-	move_and_slide()
+	state_machine.update(delta)
+	velocity_component.move(self)
 
 
-func set_state(new_state: State) -> void:
-	super.set_state(new_state)
-	
-	match new_state:
-		State.IDLE:
-			attack_target = null
-		State.PATROL:
-			plan_patrol_destination()
-		State.ATTACK:
-			pass
+func _on_enter_idle() -> void:
+	attack_target = null
+
+
+func _on_enter_patrol() -> void:
+	patrol_component.target_node = commander
 
 
 func fire() -> void:
@@ -48,43 +54,36 @@ func can_fire() -> bool:
 	return _last_fire_time + fire_rate * 1000.0 < Time.get_ticks_msec()
 
 
-func _update_idle(delta: float) -> void:
-	drift(delta)
+func _update_idle(_delta: float) -> void:
+	movement_component.drift()
 	
-	if velocity.is_zero_approx():
-		set_state(State.PATROL)
-		return
+	if is_valid_target(commander):
+		return state_machine.change_state(PATROL_STATE)
 
 
 func _update_patrol(delta: float) -> void:
 	if not is_valid_target(commander):
-		set_state(State.IDLE)
-	
-	move_toward_target_position(patrol_destination, delta)
+		return state_machine.change_state(IDLE_STATE)
+		
+	patrol_component.update(delta)
 	
 	_scan_for_attack_target()
 	
 	if is_valid_target(attack_target):
-		set_state(State.ATTACK)
-		return
-	
-	if has_arrived_at_position(patrol_destination):
-		set_state(State.IDLE)
-		return
+		return state_machine.change_state(ATTACK_STATE)
 
 
-func _update_attack(delta: float) -> void:
+func _update_attack(_delta: float) -> void:
 	if not is_valid_target(attack_target):
-		set_state(State.IDLE)
-		return
+		return state_machine.change_state(IDLE_STATE)
 	
-	keep_target_at_distance(attack_target, scan_range, attack_distance_tolerance, delta)
+	movement_component.keep_range_node(attack_target, attack_range)
 	
-	if not is_in_range(attack_target, attack_range) or not can_fire(): return
+	if not proximity_component.is_in_range(attack_target, attack_range) or not can_fire(): return
 	
 	fire()
 
 
 func _scan_for_attack_target() -> void:
-	attack_target = scan_for_target(ENEMY)
+	attack_target = proximity_component.scan_for_target(Constants.ENEMY_GROUP)
 	
